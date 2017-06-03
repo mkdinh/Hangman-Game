@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>One-Liner Kills</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+    body {
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <audio controls autoplay hidden loop>
+        <source src="assets/musics/rawdeal.mp3">
+    </audio>
+
+     <audio hidden id="gun">
+        <source src="assets/musics/gun2.mp3">
+   </audio>
+ 
+
+    
+
+    <!-- Page Content -->
+    <div class="container">
+        
+        <div class="row">
+            
+            <div class="col-lg-7 text-center logo">
+                <img class="terminator" src="assets/images/the-terminator.jpg" alt="the-terminator">
+                <img class="bullet" id ="one" src="assets/images/bullet.png" alt="bullet" style="top:190px; left:230px">
+                <img class="bullet" id ="two" src="assets/images/bullet.png" alt="bullet" style="top:240px; left:270px">
+                <img class="bullet" id ="three" src="assets/images/bullet.png" alt="bullet" style="top:150px; left:290px">
+                <img class="bullet" id ="four" src="assets/images/bullet.png" alt="bullet" style="top:175px; left:360px">
+                <img class="bullet" id ="five" src="assets/images/bullet.png" alt="bullet" style="top:125px; left:360px">
+                <img class="bullet" id ="six" src="assets/images/bullet.png" alt="bullet" style="top:250px; left:380px">
+                <img class="bullet" id ="seven" src="assets/images/bullet.png" alt="bullet" style="top:200px; left:315px">
+                <img class="bullet" id ="eight" src="assets/images/bullet.png" alt="bullet" style="top:200px; left:415px">
+                <img class="bullet" id ="nine" src="assets/images/bullet.png" alt="bullet" style="top:110px; left:305px">
+                <img class="bullet" id ="ten" src="assets/images/bullet.png" alt="bullet" style="top:60px; left:315px">
+
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+                <img class="title" src="assets/images/logo.jpg" alt="logo">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-8 text-center" id="game">
+                <h1>The best kills are the one-liner kills!</h1>
+                <p id="word">Press Enter to start playing!</p>
+            </div>
+            <div class="col-lg-4 text-center" id = "score">
+                <h1><b>Score</b></h1>
+                <p class="lead">One-Liner Kill: 0</p>
+                <p class="lead">Guess Remaining: 10<p>
+                <p class="lead">Already Guessed:<p>
+                
+            </div>
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+
+    <script type="text/javascript" src="assets/javascript/game.js"></script>
+
+</body>
+
+</html>
