@@ -152,7 +152,7 @@ document.onkeyup = function(ev){ // On key press
 						var bullet = rand(allBullet); // pick a random bullet id
 						document.getElementById(bullet).style.visibility = "initial"; // change the visiblity (hidden -> visible) 
 						allBullet.splice(allBullet.indexOf(bullet),1); // remove bullet id from array so it doesnt show up twice
-						//document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
+						document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
 						mismatched = true;
 				}
 
