@@ -71,6 +71,36 @@ function updateScore(){
 
 }
 
+// Pick Random Bullet
+//////////////////////////////////////////////////////
+
+function randomBullet(){
+	var bullet = rand(allBullet); // pick a random bullet id
+	document.getElementById(bullet).style.visibility = "visible"; // change the visibility (hidden -> visible) 
+	allBullet.splice(allBullet.indexOf(bullet),1); // remove bullet id from array so it doesnt show up twice
+	document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
+}
+
+// Reset Parameters
+//////////////////////////////////////////////////////
+function reset(){
+	kill = 0;
+	guessRemain = 10;
+	guessWrong = [];
+	word =  [];
+	blank = [];
+	start = true;
+	stop = true;
+	next = true;
+	allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
+	for(i = 0; i<allBullet.length;i++){
+		document.getElementById(allBullet[i]).style.visibility = "hidden";
+	}
+	console.log(allBullet);
+	updateGame();
+	updateScore();
+}
+
 //////////////////////////////////////////////////////////////////////////////////////
 // Main Game Code
 //////////////////////////////////////////////////////////////////////////////////////
@@ -130,30 +160,28 @@ document.onkeyup = function(ev){ // On key press
 		
 
 		if(isLetter(code2Char)){
-			
-			if(stop === true){return};
+			console.log(stop);
+			if(stop){return};
 			var mismatched = false;
 			// Check for correct keys against characters array
 			for(i=0;i<topic.size();i++){
 
 				if(code2Char.toUpperCase() === word[i]){
-
 					blank[i] = word[i];
-					//word[i]=word[i];
 				} // end if loop
 
 			// If the key press is not equal to any of the char in the array
-			if(word.indexOf(code2Char) === -1){
+			if(word.indexOf(code2Char) === -1){ //console.log(code2Char);console.log(guessWrong); console.log(word.indexOf(code2Char));
 				//if(code2Char.toUpperCase() != word[i]){
-				 		if(mismatched) continue;	
-						guessWrong.push(" "+code2Char); //push the key char into the already guessed array
+				 		if(guessWrong.indexOf(code2Char) === 1){return} 	
+				 		if(mismatched){return}
+						guessWrong.push(code2Char); //push the key char into the already guessed array
 						guessRemain = guessRemain-1; // subtract 1 from the number of guess remained
 						
-						var bullet = rand(allBullet); // pick a random bullet id
-						document.getElementById(bullet).style.visibility = "initial"; // change the visiblity (hidden -> visible) 
-						allBullet.splice(allBullet.indexOf(bullet),1); // remove bullet id from array so it doesnt show up twice
-						document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
+						randomBullet();
+
 						mismatched = true;
+						updateScore();
 				}
 
 			updateGame(); // update #game id with image
@@ -162,7 +190,10 @@ document.onkeyup = function(ev){ // On key press
 			} // end for loop
 		}
 	} // END OF FUNCTION
-		playGame(userGuess);
+		
+	playGame(userGuess);
+
+
 	// If guessRemain === 0 (GAME OVER)
 	//////////////////////////////////////////////////////
 
@@ -170,18 +201,17 @@ document.onkeyup = function(ev){ // On key press
 			var gameover =  '<h1>Press enter to restart!</h1>'
 			+'<img src="assets/images/gameover.gif">'; //image for game over
 			document.querySelector("#game").innerHTML = gameover; // update game with correct image	
-			//ask to play again
 			stop = true;
-			next = true;
-			kill = 0;
-			guessRemain = 10;
-			guessWrong = [];
+		}
+
+		if(guessRemain === 0 && ev.keyCode === 13){
+			reset();
 		}
 
 	// If Guess all of the Char Correctly
 	//////////////////////////////////////////////////////
 
-		if(blank.join("").toUpperCase() === word.join("").toUpperCase()){ // if blank array equal to word array
+		if(blank.join("").toUpperCase() === word.join("").toUpperCase() && typeof blank[0] !== "undefined"){ // if blank array equal to word array
 			kill = kill +1; // increase kill var by 1
 			var correctImg =  '<h1>Press enter to continue!</h1>'
 			+'<img src="'+topic.gif+'">'; // display images in object
