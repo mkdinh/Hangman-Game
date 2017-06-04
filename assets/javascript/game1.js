@@ -19,7 +19,7 @@ var html = "";
 
 
 //Random indexing variables
-var allTopic = [predator1,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
+var allTopic = [predator1];//,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
 var allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
 
 
@@ -33,6 +33,8 @@ var allBullet = ["one","two","three","four","five","six","seven","eight","nine",
 
 function rand(myArray){
 	var element = myArray[Math.floor(Math.random() * myArray.length)];
+	myArray.splice(myArray.indexOf(element),1); // remove element from array so it doesnt show up twice
+
 	return element;
 }
 
@@ -71,13 +73,22 @@ function updateScore(){
 
 }
 
+// Update #Game section
+//////////////////////////////////////////////////////
+
+function won(){
+	var won = "<b><h1>Congrats! You are a great one-line killer!</h1>"
+	+'<image src="assets/images/thumb.gif">';
+	document.querySelector("#game").innerHTML = won;
+}
+
+
 // Pick Random Bullet
 //////////////////////////////////////////////////////
 
 function randomBullet(){
 	var bullet = rand(allBullet); // pick a random bullet id
 	document.getElementById(bullet).style.visibility = "visible"; // change the visibility (hidden -> visible) 
-	allBullet.splice(allBullet.indexOf(bullet),1); // remove bullet id from array so it doesnt show up twice
 	document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
 }
 
@@ -93,10 +104,10 @@ function reset(){
 	stop = true;
 	next = true;
 	allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
+	allTopic = [predator1];//,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
 	for(i = 0; i<allBullet.length;i++){
 		document.getElementById(allBullet[i]).style.visibility = "hidden";
 	}
-	console.log(allBullet);
 	updateGame();
 	updateScore();
 }
@@ -116,10 +127,6 @@ document.onkeyup = function(ev){ // On key press
 	var userGuess = ev.keyCode; // store key pressed into variable
 	var code2Char = String.fromCharCode(userGuess);
 
-	
-	//	reStart();
-
-
 	function playGame(userGuess){
 		//If key press is equal () start the game
 		if(userGuess === 13 && userGuess !== 116){	
@@ -127,9 +134,13 @@ document.onkeyup = function(ev){ // On key press
 				blank= [];
 				word=[];
 				//random picking topic
+				
 				topic = rand(allTopic);
-				topic.phrase = topic.phrase.toUpperCase();
-
+				console.log(topic);
+				if(typeof topic !== "undefined"){
+					topic.phrase = topic.phrase.toUpperCase();
+				}else{won();reset();playGame()}
+				console.log(allTopic);
 				// Hide characters of phrase
 				// check the phrase in the topic and push each char in to an array
 				// at the same time, push a blank into the same index of another array
@@ -160,7 +171,6 @@ document.onkeyup = function(ev){ // On key press
 		
 
 		if(isLetter(code2Char)){
-			console.log(stop);
 			if(stop){return};
 			var mismatched = false;
 			// Check for correct keys against characters array
