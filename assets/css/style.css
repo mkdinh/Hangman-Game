@@ -8,5 +8,5 @@ h1{color:white;margin-bottom:30px;}
 #game{ border-top: 5px dashed #880015;height:250px;}
 #score{ border-top: 5px dashed #880015;height:250px; color:#880015;}
 #score p.lead{font-size:170%; margin-top: 20px;}
-#word{letter-spacing: 20px; font-size: 50px; color:white;}
-#game img{height:250px;margin-top:25px;}
+#word{letter-spacing: 20px; font-size: 40px; color:white;}
+#game img{height:200px;margin-top:0px;}

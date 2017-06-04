@@ -46,7 +46,7 @@ function isLetter(char){
 function reStart(){
 	var start = '<h1>The best kills are the one-liner kills!</h1>'
      +'<p id="word">Press Enter to start playing!</p>';
-    document.querySelector("#game").innerHTML = reStart;
+    document.querySelector("#game").innerHTML = start;
 
 }
 // Update #Game section
@@ -86,14 +86,13 @@ document.onkeyup = function(ev){ // On key press
 	var userGuess = ev.keyCode; // store key pressed into variable
 	var code2Char = String.fromCharCode(userGuess);
 
-	if(userGuess === 116){
-			reStart();
 	
-	}
+	//	reStart();
 
-	function play(userGuess){
+
+	function playGame(userGuess){
 		//If key press is equal () start the game
-		if(userGuess === 13 ){	
+		if(userGuess === 13 && userGuess !== 116){	
 			if(start === false){return;}
 				blank= [];
 				word=[];
@@ -128,62 +127,79 @@ document.onkeyup = function(ev){ // On key press
 
 		// Checking Key Pressed Against Char of a Phrase 
 		//////////////////////////////////////////////////////
+		
+
+		if(isLetter(code2Char)){
 			
-		if(isLetter(code2Char) && userGuess !== 116 && userGuess && 13){
 			if(stop === true){return};
+			var mismatched = false;
 			// Check for correct keys against characters array
 			for(i=0;i<topic.size();i++){
-				if(code2Char.toUpperCase() === word[i]){	
-					blank[i] = word[i];
-					word[i]=word[i];
 
+				if(code2Char.toUpperCase() === word[i]){
+
+					blank[i] = word[i];
+					//word[i]=word[i];
 				} // end if loop
-			} // end for loop
 
 			// If the key press is not equal to any of the char in the array
 			if(word.indexOf(code2Char) === -1){
-					guessWrong.push(" "+String.fromCharCode(userGuess)); //push the key char into the already guessed array
-					guessRemain = guessRemain-1; // subtract 1 from the number of guess remained
-					
-					var bullet = rand(allBullet); // pick a random bullet id
-					document.getElementById(bullet).style.visibility = "initial"; // change the visiblity (hidden -> visible) 
-					allBullet.splice(allBullet.indexOf(bullet),1); // remove bullet id from array so it doesnt show up twice
-					document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
-			}
+				//if(code2Char.toUpperCase() != word[i]){
+				 		if(mismatched) continue;	
+						guessWrong.push(" "+code2Char); //push the key char into the already guessed array
+						guessRemain = guessRemain-1; // subtract 1 from the number of guess remained
+						
+						var bullet = rand(allBullet); // pick a random bullet id
+						document.getElementById(bullet).style.visibility = "initial"; // change the visiblity (hidden -> visible) 
+						allBullet.splice(allBullet.indexOf(bullet),1); // remove bullet id from array so it doesnt show up twice
+						//document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
+						mismatched = true;
+				}
 
 			updateGame(); // update #game id with image
 			updateScore(); // update score
+
+			} // end for loop
 		}
 	} // END OF FUNCTION
-	play(userGuess);
+		playGame(userGuess);
 	// If guessRemain === 0 (GAME OVER)
 	//////////////////////////////////////////////////////
 
 		if(guessRemain === 0){
-			var gameover = '<img src="assets/images/gameover.gif">'; //image for game over
+			var gameover =  '<h1>Press enter to restart!</h1>'
+			+'<img src="assets/images/gameover.gif">'; //image for game over
 			document.querySelector("#game").innerHTML = gameover; // update game with correct image	
 			//ask to play again
 			stop = true;
+			next = true;
+			kill = 0;
+			guessRemain = 10;
+			guessWrong = [];
 		}
 
 	// If Guess all of the Char Correctly
 	//////////////////////////////////////////////////////
 
-
 		if(blank.join("").toUpperCase() === word.join("").toUpperCase()){ // if blank array equal to word array
 			kill = kill +1; // increase kill var by 1
-			var correctImg = '<img src="'+topic.gif+'">'; // display images in object
+			var correctImg =  '<h1>Press enter to continue!</h1>'
+			+'<img src="'+topic.gif+'">'; // display images in object
 			document.querySelector("#game").innerHTML = correctImg; // update game with correct image
+			stop = true;
 			next = true;
 			blank = [];
 		}
 
-	if(userGuess === 13 && next === true){
-				start = true;
-				updateGame();
-				updateScore();
-				play(userGuess)}
-				console.log(start);
+	// Go to next Game
+	//////////////////////////////////////////////////////
+
+	if(userGuess === 13 && next === true){ // If user press enter and next is true (by winning)
+				start = true; // set start to be true to run the play() function again
+				stop = false;
+				updateGame(); // update games with new blanks
+				updateScore(); // date the score after hitting enter
+				playGame(userGuess)} // run play() function
 
 	// Ask to quit
 	//////////////////////////////////////////////////////
