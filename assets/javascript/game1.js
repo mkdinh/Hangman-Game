@@ -19,7 +19,7 @@ var html = "";
 
 
 //Random indexing variables
-var allTopic = [predator1];//,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
+var allTopic = [predator1,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
 var allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
 
 
@@ -104,7 +104,7 @@ function reset(){
 	stop = true;
 	next = true;
 	allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
-	allTopic = [predator1];//,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
+	allTopic = [predator1,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
 	for(i = 0; i<allBullet.length;i++){
 		document.getElementById(allBullet[i]).style.visibility = "hidden";
 	}
@@ -145,21 +145,21 @@ document.onkeyup = function(ev){ // On key press
 				// check the phrase in the topic and push each char in to an array
 				// at the same time, push a blank into the same index of another array
 				// if there is a space in the phrase, the index is empty
-				for(var i=0;i<topic.size();i++){
-					var phraseChar = topic.phrase.charAt(i);
+						for(var i=0;i<topic.size();i++){
+							var phraseChar = topic.phrase.charAt(i);
 
-					if(isLetter(phraseChar)){
-						word.push(phraseChar);
-						blank.push("_");
-					}else if(phraseChar === "!" || phraseChar === "?" || phraseChar === "'"){
-						word.push(phraseChar);
-						blank.push(phraseChar);
-					}else{
-						word.push(" ");
-						blank.push(" ");
-					} // end of else loop
+							if(isLetter(phraseChar)){
+								word.push(phraseChar);
+								blank.push("_");
+							}else if(phraseChar === "!" || phraseChar === "?" || phraseChar === "'"){
+								word.push(phraseChar);
+								blank.push(phraseChar);
+							}else{
+								word.push(" ");
+								blank.push(" ");
+							} // end of else loop
 
-				} // end of for loop
+						} // end of for loop
 
 			//Update #game html
 			updateGame();
