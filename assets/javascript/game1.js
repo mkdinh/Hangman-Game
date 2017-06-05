@@ -77,7 +77,7 @@ function updateScore(){
 //////////////////////////////////////////////////////
 
 function won(){
-	var won = "<b><h1>Congrats! You are a great one-line killer!</h1>"
+	var won = "<b><h1>Congrats! You are a great one-liner!</h1>"
 	+'<image src="assets/images/thumb.gif">';
 	document.querySelector("#game").innerHTML = won;
 }
