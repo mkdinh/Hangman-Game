@@ -229,6 +229,7 @@ document.onkeyup = function(ev){ // On key press
 			stop = true;
 			next = true;
 			blank = [];
+			guessWrong = [];
 		}
 
 	// Go to next Game
