@@ -170,7 +170,7 @@ document.onkeyup = function(ev){ // On key press
 		//////////////////////////////////////////////////////
 		
 
-		if(isLetter(code2Char) && userGuess === 116){
+		if(isLetter(code2Char) && userGuess !== 116){
 			if(stop){return};
 			var mismatched = false;
 			// Check for correct keys against characters array
