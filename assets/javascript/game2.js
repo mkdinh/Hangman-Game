@@ -16,7 +16,7 @@ var playPause = true;
 
 
 //Random indexing variables
-var allTopic = [predator1,predator2,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
+var allTopic = [predator1,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
 var allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
 var allBulletBA =[];
 
@@ -29,8 +29,9 @@ var allBulletBA =[];
 //////////////////////////////////////////////////////
 
 function rand(myArray){
-	var element = myArray[Math.floor(Math.random() * myArray.length)];
-	myArray.splice(myArray.indexOf(element),1); // remove element from array so it doesnt show up twice
+	var ind = Math.floor(Math.random() * myArray.length);
+	var element = myArray[ind];
+	myArray.splice(ind,1); // remove element from array so it doesnt show up twice
 	return element;
 }
 
