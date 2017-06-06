@@ -163,12 +163,17 @@ function initializeGame(){
 	return[topic,blank,word];
 	}
 
+// Check for Correct Char
+//////////////////////////////////////////////////////
 
 function checkCorrect(code2Char){
 	//if(code2Char.toUpperCase() === word[i]){
 		blank[i] = word[i];
 //		updateGame(topic);
 }
+
+// Check for Wrong char
+//////////////////////////////////////////////////////
 
 function checkWrong(code2Char){
 	if(guessWrong.indexOf(code2Char) === -1){
@@ -177,6 +182,9 @@ function checkWrong(code2Char){
 		randomBullet();
 	}
 }
+
+// If Getting All Char Correct
+//////////////////////////////////////////////////////
 
 function win(){
 	kill = kill +1; // increase kill var by 1
@@ -190,6 +198,9 @@ function win(){
 	//if(guessRemain>0){fadeOutEffect("plus2")};
 }
 
+// If Lose when GuessRemain === 0
+//////////////////////////////////////////////////////
+
 function lose(){
 	var gameover =  '<h1>Go watch some more movies and try again!</h1>'
 	+'<img src="assets/images/gameover.gif">'; //image for game over
@@ -197,6 +208,9 @@ function lose(){
 	document.getElementById("background").pause();	
 	document.querySelector("#game").innerHTML = gameover; // update game with correct image	
 }
+
+// If get all correct hangman
+//////////////////////////////////////////////////////
 
 function finished(){
 	var won = "<b><h1>Congrats! You are a great one-liner!</h1>"
