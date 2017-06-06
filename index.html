@@ -31,17 +31,26 @@
 </head>
 
 <body>
-    <audio controls autoplay hidden loop>
+    <audio controls autoplay hidden loop id="background">
         <source src="assets/musics/rawdeal.mp3">
     </audio>
-
-     <audio hidden id="gun">
+    <audio hidden id="gun">
         <source src="assets/musics/gun2.mp3">
    </audio>
+       <audio hidden id="win">
+        <source src="assets/musics/win.mp3">
+   </audio>
+       <audio hidden id="lose">
+        <source src="assets/musics/gameover.wav">
+   </audio>
+       <audio hidden id="finished">
+        <source src="assets/musics/finished.wav">
+   </audio>
+       <audio hidden id="reload">
+        <source src="assets/musics/reload.mp3">
+   </audio>
  
-
-    
-
+ 
     <!-- Page Content -->
     <div class="container">
         
@@ -66,27 +75,52 @@
             <div class="col-lg-5 text-center">
                 <img class="title" src="assets/images/logo.jpg" alt="logo">
             </div>
-
         </div>
+
         <div class="row">
-            <div class="col-lg-8 text-center" id="game">
+            <div class="col-lg-7 text-center" id="game">
                 <h1>The best kills are the one-liner kills!</h1>
                 <p id="word">Press Enter to start playing!</p>
             </div>
-            <div class="col-lg-4 text-center" id = "score">
-                <h1><b>Score</b></h1>
-                <p class="lead">One-Liner Kill: 0</p>
-                <p class="lead">Guess Remaining: 10<p>
-                <p class="lead">Already Guessed:<p>
-                
-            </div>
-        </div>
+            <div class="col-lg-5 " id = "score">
+                 <div class="row" id ="scoreSectContainer">
+                    <h1><b>Score</b></h1>
+                    <div class="col-lg-6"> 
+                        <div class="scoreSect">One-Liner Kill:</div>
+                        <div class="scoreSect">Guess Remains:</div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div id="kill"> 0 </div>
+                        <div id="guessRemain"> 10 </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div><img id="plus1" src="assets/images/1.jpg"></div>
+                        <div><img id="plus2" src="assets/images/2.jpg"></div>
+                    </div> <!-- col-lg-2--> 
+                </div>
+
+                <div class="row" id="guessContainer">
+                    <div class="col-lg-7">
+                        <div class="scoreSect">Already Guess:</div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div id="guessWrong"></div>
+                    </div>
+                </div>
+            </div> <!-- col-lg-5--> 
+        </div><!-- row --> 
+        
+
+    </div> <!-- container -->
         <!-- /.row -->
 
     </div>
     <!-- /.container -->
+  <!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script type="text/javascript" src="assets/javascript/topics.js"></script>
-    <script type="text/javascript" src="assets/javascript/game1.js"></script>
+    <script type="text/javascript" src="assets/javascript/game2.js"></script>
 
 </body>
 

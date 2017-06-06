@@ -191,7 +191,8 @@ document.onkeyup = function(ev){ // On key press
 						randomBullet();
 
 						mismatched = true;
-						updateScore();
+						updateGuessRemain();
+						updateGuessWrong();
 				}
 
 			updateGame(); // update #game id with image

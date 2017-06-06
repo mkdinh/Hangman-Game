@@ -1,12 +1,18 @@
 body{background-color: black}
-h1{color:white;margin-bottom:30px;}
+#game h1 {color:white;margin-bottom:30px;}
+#score h1 {color:white;margin-bottom:20px; text-align:center}
 .logo{position: relative}
-.title{width:80%;}
+.title{width:80%; margin-left: 0px}
 .terminator{width:75%;z-index:0}
 .bullet{width:30px; position:absolute;background-color:transparent;}
 #one,#two,#three,#four,#five,#six,#seven,#eight,#nine,#ten{;visibility:hidden;}
 #game{ border-top: 5px dashed #880015;height:250px;}
 #score{ border-top: 5px dashed #880015;height:250px; color:#880015;}
-#score p.lead{font-size:170%; margin-top: 20px;}
+.scoreSect{font-size:170%; margin-top: 20px; text-align: left; font-weight:bold;}
+#kill,#guessRemain{font-size:170%; margin-top: 20px;text-align: left}
+#guessWrong{font-size:160%;margin-top:20px; color:white;}
 #word{letter-spacing: 20px; font-size: 40px; color:white;}
 #game img{height:200px;margin-top:0px;}
+#plus1,#plus2{opacity: 0; margin-top:23px; margin-bottom:1px; height:30px;text-align: left}
+#guessContainer{margin:0;padding:0;}
+#scoreSectContainer{margin:0;padding:0;}

@@ -10,20 +10,18 @@ var guessRemain = 10;
 var guessWrong = [];
 var word =  [];
 var blank = [];
-var start = true;
-var stop = false;
-
-var next = false;
-var html = "";
+var initPause = false;
+var playPause = true;
 //Topics
 
 
 //Random indexing variables
-var allTopic = [predator1];//,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
+var allTopic = [predator1,predator2,predator2,TLAH,pass57,theyLive,dieHard,commando,dirtyHarry, hard2Kill,starWar2];
 var allBullet = ["one","two","three","four","five","six","seven","eight","nine","ten"];
+var allBulletBA =[];
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Declaring functions
+// Updating & Picking functions
 //////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -55,73 +53,204 @@ function updateGame(topic){
 // Update #Score section
 //////////////////////////////////////////////////////
 
+function updateKill(){
+	var newKill = kill;       
+    document.querySelector("#kill").innerHTML = newKill;
+  	fadeOutEffect("plus1");
+} 
+
+function updateGuessRemain(){
+	var newGuessRemain = guessRemain;       
+    document.querySelector("#guessRemain").innerHTML = newGuessRemain;
+}
+
+function addGuessRemain(){
+	if(guessRemain<=8){
+		guessRemain = guessRemain+2;
+		rand
+		fadeOutEffect("plus2");				
+	 	updateGuessRemain();
+		 	for(i = 0; i < 2; i++){
+		 		addBullet();
+		 	}
+ 	}
+}
+function updateGuessWrong(){
+	guessWrongStr = guessWrong.join(" ");
+	var newGuessWrong = guessWrongStr;       
+    document.querySelector("#guessWrong").innerHTML = newGuessWrong;
+}
+
 function updateScore(){
-	var score = "<h1><b>Score</b></h1>"
-        + '<p class="lead">One-Liner Kill: ' + kill + "</p>"
-        + '<p class="lead">Guess Remaining: ' + guessRemain + "<p>"
-        + '<p class="lead">Already Guessed:<br> ' + guessWrong.join("") + "<p>";
-
-        document.querySelector("#score").innerHTML = score;
-
+	updateKill();
+	updateGuessRemain();
+	updateGuessWrong(); 
 }
 
 
+// Pick Random Bullet
+//////////////////////////////////////////////////////
+
+function randomBullet(){
+	var bullet = rand(allBullet); // pick a random bullet id
+	allBulletBA.push(bullet);
+	document.getElementById(bullet).style.visibility = "visible"; // change the visibility (hidden -> visible) 
+	document.getElementById('gun').play(); // play shot gun sound when ever a guess is wrong
+}
+
+// Disabling Random Bullet
+//////////////////////////////////////////////////////
+
+function addBullet(){
+	var bullet = rand(allBulletBA); // pick a random bullet id
+	allBullet.push(bullet);
+	document.getElementById(bullet).style.visibility = "hidden"; // change the visibility (hidden -> visible) 
+//	document.getElementById('reload').play(); 
+}
+
+// Set fading animation
+//////////////////////////////////////////////////////
+
+function fadeOutEffect(target) {
+    var fadeTarget = document.getElementById(target);
+    var fadeEffect = setInterval(function () {
+        if (!fadeTarget.style.opacity){
+            fadeTarget.style.opacity = 1;
+        }
+        if (fadeTarget.style.opacity < 0.1) {
+            clearInterval(fadeEffect);
+        } else {
+            fadeTarget.style.opacity -= 0.1;
+        }
+    }, 100);
+    fadeTarget.style.opacity = '';
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Main Game Code
+// Main Game Functions
 //////////////////////////////////////////////////////////////////////////////////////
 
-	document.onkeyup = function(ev){
+function initializeGame(){
+		blank = [];
+		word = [];
+		// guessWrong = [];
+		// updateGuessWrong();
 
-		var userGuess = ev.keyCode; // store key pressed into variable
-		var code2Char = String.fromCharCode(userGuess).toUpperCase();
-		var topic = "";
-		function initializeGame(){
-			if(userGuess === 13 && userGuess !== 116){
-				topic = rand(allTopic);	
-				for(var i=0;i<topic.size();i++){
-					var phraseChar = topic.phrase.charAt(i);
-					if(isLetter(phraseChar)){
-						word.push(phraseChar);
-						blank.push("_");
-					}else if(phraseChar === "!" || phraseChar === "?" || phraseChar === "'" || phraseChar ===","){
-						word.push(phraseChar);
-						blank.push(phraseChar);
-					}else{
-						word.push(" ");
-						blank.push(" ");
-					} // end of else loop
-				updateGame(topic);
-				return topic;
-				//	console.log(blank);console.log(word)
-				} // end of for loop
-			}
+		if(typeof allTopic[0] !== "undefined"){
+			topic = rand(allTopic);	
+			topic.phrase = topic.phrase.toUpperCase();
+		}else{
+			finished();
+			return;
 		}
+		for(var i=0;i<topic.size();i++){
+			var phraseChar = topic.phrase.charAt(i);
+			if(isLetter(phraseChar)){
+				word.push(phraseChar);
+				blank.push("_");
+			}else if(phraseChar === "!" || phraseChar === "?" || phraseChar === "'" || phraseChar ===","){
+				word.push(phraseChar);
+				blank.push(phraseChar);
+			}else{
+				word.push(" ");
+				blank.push(" ");
+			} // end of else loop
+		} // end of for loop
 
+//	updateGame(topic);
+	return[topic,blank,word];
+	}
+
+
+function checkCorrect(code2Char){
+	//if(code2Char.toUpperCase() === word[i]){
+		blank[i] = word[i];
+//		updateGame(topic);
+}
+
+function checkWrong(code2Char){
+	if(guessWrong.indexOf(code2Char) === -1){
+		guessRemain = guessRemain-1;
+		guessWrong.push(code2Char); //push the key char into the already guessed array
+		randomBullet();
+	}
+}
+
+function win(){
+	kill = kill +1; // increase kill var by 1
+	//guessRemain = guessRemain+2; // subtract 1 from the number of guess remained
+	guessWrong = [];
+	var correctImg =  '<h1>Press enter to continue!</h1>'
+	+'<img src="'+topic.gif+'">'; // display images in object
+	document.querySelector("#game").innerHTML = correctImg; // update game with correct image
+	document.getElementById("win").play();
+//	updateScore();
+	//if(guessRemain>0){fadeOutEffect("plus2")};
+}
+
+function lose(){
+	var gameover =  '<h1>Go watch some more movies and try again!</h1>'
+	+'<img src="assets/images/gameover.gif">'; //image for game over
+	document.getElementById("lose").play();
+	document.getElementById("background").pause();	
+	document.querySelector("#game").innerHTML = gameover; // update game with correct image	
+}
+
+function finished(){
+	var won = "<b><h1>Congrats! You are a great one-liner!</h1>"
+	+'<image src="assets/images/thumb.gif">';
+	document.getElementById("background").pause();
+	document.getElementById("finished").play();
+	document.querySelector("#game").innerHTML = won;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Main Game Conditionals
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+document.onkeyup = function(ev){
+
+	var userGuess = ev.keyCode; // store key pressed into variable
+	var code2Char = String.fromCharCode(userGuess).toUpperCase();
+	if(userGuess === 13 && userGuess !== 116){
+		if(initPause){return};
 		initializeGame();
+		initPause = true;
+		playPause = false;
+		if(typeof allTopic[0] !== "undefined"){
+		updateGame(topic);
+		}
+	}
 
-		function checkCorrect(){
-			if(code2Char.toUpperCase() === word[i]){
-				blank[i] = word[i];
+	if(isLetter(code2Char)){
+		if(playPause){return}
+		for(i = 0; i < word.length; i++){
+			if(code2Char === word[i]){
+				checkCorrect(code2Char);	
 			}
+		updateGame(topic);
+		}
+		
+		if(word.indexOf(code2Char) === -1){
+			checkWrong(code2Char);
+			updateGuessWrong();
+			updateGuessRemain();
 		}
 
-		function checkWrong(){}
-			// If the key press is not equal to any of the char in the array
-			if(word.indexOf(code2Char) === -1){ //console.log(code2Char);console.log(guessWrong); console.log(word.indexOf(code2Char));
-				//if(code2Char.toUpperCase() != word[i]){
-				 		if(guessWrong.indexOf(code2Char) === 1){return} 	
-						guessWrong.push(code2Char); //push the key char into the already guessed array
-						guessRemain = guessRemain-1; // subtract 1 from the number of guess remained
-						
-						//randomBullet();
+		if(word.join("") === blank.join("") && typeof blank[0] !== "undefined"){
+			playPause = true;			
+			initPause = false;
+			win(); 
+			addGuessRemain();
+			updateScore();
+		
+		}else if(guessRemain <= 0){
+			lose();
+		}
+	}
 
-						updateScore();
-			}
-
-		if(isLetter(code2Char)){
-			for(i=0;i<topic.size();i++){
-				checkCorrect()	
-			}
-		}else{}
-	}// onkeyup
+	
+}// onkeyup
